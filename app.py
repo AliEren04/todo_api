@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from todo import todo
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -16,9 +16,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["FLASK_RUN_PORT"] = os.getenv("PORT")
 
 #Database Related
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+db = SQLAlchemy()
 db.init_app(app)
+migrate = Migrate(app, db)
 
 #Blueprints(Controllers)
 app.register_blueprint(todo)
