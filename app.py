@@ -1,9 +1,9 @@
 from flask import Flask, jsonify
-from controllers.todo import todo
+from todo import todo
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
-import os   
+import os 
 
 #App Initialization
 app = Flask(__name__)
