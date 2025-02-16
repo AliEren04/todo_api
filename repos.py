@@ -1,42 +1,36 @@
 from models import Todo
 from schemas import TodoSchema
+from app import db
 from flask import jsonify
 
 class TodoRepository:
     def __init__(self):
         self.todo_schema = TodoSchema()
-        self.todo_model = Todo()
+        self.todos_schema = TodoSchema(many=True)
 
     def get_todos(self):
-        todos = self.todo_model.query.all()
-        if not todos:
-            return jsonify({"Success": False, "Message": "There are not any todos uploaded"}), 404
-        todos_serialized = self.todo_schema.dump(todos)
-        return jsonify({"Success": True, "Todos": todos_serialized}), 200
+        todos = Todo.query.all()
+        return self.todos_schema.dump(todos)
+       
         
     def get_todo(self, todo_id):
-        todo = self.todo_model.query.get(todo_id)
-        todo_serialized = self.todo_schema.dump(todo)
-        if todo:
-            return jsonify({"Success": True, "Todo": todo_serialized}), 200
-        else:
-            return jsonify({"Success": False, "Message": "Todo not found"}), 404
+        todo = Todo.query.filter_by(id=todo_id).first()
+        return self.todo_schema.dump(todo)
 
     def create_todo(self, todo):
-        todo_serialized = self.todo_schema.dump(todo)
-        self.todo_model.create(**todo_serialized)
-        self.todo_model.commit()
-        return jsonify({"Success": True, "Created Todo": todo_serialized}), 201
+        todo_serialized = self.todo_schema.load(todo)
+        todo_created = Todo(**todo_serialized)
+        db.session.add(todo_created)
+        db.session.commit()
+        return self.todo_schema.dump(todo_created)
 
     def update_todo(self, todo_id, todo):
-        todo_serialized = self.todo_schema.dump(todo)
-        self.todo_model.query.get(todo_id).update(todo_serialized)
-        self.todo_model.commit()
-        return jsonify({"Success": True, "Updated Todo's ID": todo_id, "Updated Todo": todo_serialized}), 200
-
-
+        todo_serialized = self.todo_schema.load(todo)
+        Todo.query.filter_by(id=todo_id).update(todo_serialized)
+        db.session.commit()
+        return self.todo_schema.dump(todo)
 
     def delete_todo(self, todo_id):
-        self.todo_model.query.get(todo_id).delete()
-        self.todo_model.commit()
-        return jsonify({"Success": True, "Deleted Todo's ID": todo_id}), 200
+        deleted_todo = Todo.query.filter_by(id=todo_id).delete()
+        db.session.commit()
+        return todo_id
