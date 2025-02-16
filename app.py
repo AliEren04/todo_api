@@ -3,6 +3,7 @@ from todo import todo
 from extensions import db, migrate
 from dotenv import load_dotenv
 import os
+from models import Todo
 
 #App Initialization
 app = Flask(__name__)
