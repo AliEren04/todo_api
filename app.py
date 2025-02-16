@@ -1,9 +1,8 @@
 from flask import Flask
 from todo import todo
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from extensions import db, migrate
 from dotenv import load_dotenv
-import os 
+import os
 
 #App Initialization
 app = Flask(__name__)
@@ -15,10 +14,9 @@ load_dotenv()
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["FLASK_RUN_PORT"] = os.getenv("PORT")
 
-#Database Related
-db = SQLAlchemy()
+#Extensions Initialization
 db.init_app(app)
-migrate = Migrate(app, db)
+migrate.init_app(app, db)
 
 #Blueprints(Controllers)
 app.register_blueprint(todo)
