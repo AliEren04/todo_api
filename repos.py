@@ -1,6 +1,6 @@
 from models import Todo
 from schemas import TodoSchema
-from app import db
+from extensions import db
 from flask import jsonify
 
 class TodoRepository:
@@ -22,7 +22,7 @@ class TodoRepository:
         todo_created = Todo(**todo_serialized)
         db.session.add(todo_created)
         db.session.commit()
-        return self.todo_schema.dump(todo_created)
+        return todo_created
 
     def update_todo(self, todo_id, todo):
         todo_serialized = self.todo_schema.load(todo)

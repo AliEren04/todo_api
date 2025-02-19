@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import jsonify, request
 from repos import TodoRepository
-from services import AuthService
+from services import GoogleAuthService
 
 google_auth = Blueprint("google_auth", __name__, url_prefix="/api/auth/")
 todo = Blueprint("todo", __name__, url_prefix="/api/todos/")
@@ -53,12 +53,12 @@ def delete_todo(todo_id):
 
 @google_auth.route("/login", methods=["GET"])
 def login():
-    return AuthService().login()
+    return GoogleAuthService().login()
 
 @google_auth.route("/authorised", methods=["GET"])
 def authorised():
-    return AuthService().authorised()
+    return GoogleAuthService().authorised()
 
 @google_auth.route("/logout", methods=["GET"])
 def logout():
-    return AuthService().logout()
+    return GoogleAuthService().logout()

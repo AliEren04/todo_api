@@ -1,11 +1,11 @@
-from app import oauth
+from extensions import oauth
 from dotenv import load_dotenv
 from flask import jsonify, session, url_for
 import os
 
 load_dotenv()
 
-class AuthService():
+class GoogleAuthService():
     def __init__(self): 
         self.oauth = oauth
         self.google = oauth.remote_app(
