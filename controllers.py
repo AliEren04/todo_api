@@ -53,12 +53,15 @@ def delete_todo(todo_id):
 
 @google_auth.route("/login", methods=["GET"])
 def login():
-    return GoogleAuthService().login()
+    google_auth_service = GoogleAuthService()
+    return google_auth_service.login()
 
 @google_auth.route("/authorised", methods=["GET"])
 def authorised():
-    return GoogleAuthService().authorised()
+    google_auth_service = GoogleAuthService()
+    return google_auth_service.authorised()
 
 @google_auth.route("/logout", methods=["GET"])
 def logout():
-    return GoogleAuthService().logout()
+    google_auth_service = GoogleAuthService()
+    return google_auth_service.logout()
