@@ -28,9 +28,9 @@ class TodoRepository:
         todo_serialized = self.todo_schema.load(todo)
         Todo.query.filter_by(id=todo_id).update(todo_serialized)
         db.session.commit()
-        return self.todo_schema.dump(todo)
+        return todo_id  
 
     def delete_todo(self, todo_id):
-        deleted_todo = Todo.query.filter_by(id=todo_id).delete()
+        Todo.query.filter_by(id=todo_id).delete()
         db.session.commit()
         return todo_id
