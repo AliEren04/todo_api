@@ -5,16 +5,11 @@ from dotenv import load_dotenv
 import os
 from models import Todo
 
-
-
-
-
 #App Initialization
 app = Flask(__name__)
 
 #OAuth Initialization
 oauth.init_app(app)
-
 
 
 #Load .env File
@@ -41,4 +36,3 @@ def internal_server_error(error):
 
 if __name__ == "__main__":
     app.run()
-
