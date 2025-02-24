@@ -1,5 +1,5 @@
 from flask import Flask
-from controllers import todo
+from routes import todo
 from extensions import db, migrate, oauth
 from dotenv import load_dotenv
 import os
@@ -17,6 +17,7 @@ load_dotenv()
 
 #Configs From Environment Variables
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SESSION_PERMANENT"] = True
 
 #Extensions Initialization
 db.init_app(app)

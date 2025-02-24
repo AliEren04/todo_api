@@ -6,6 +6,13 @@ class Todo(db.Model):
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     status = db.Column(db.String(255), nullable=False)
+    user_id =  db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) 
 
     def __repr__(self):
         return f"<Todo {self.id}>"
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    google_id = db.Column(db.String(255), nullable=False)
+    todos =  db.relationship("Todo", backref="user", lazy=True)

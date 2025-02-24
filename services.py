@@ -1,6 +1,7 @@
 from extensions import oauth
 from dotenv import load_dotenv
 from flask import jsonify, session, url_for
+from models import User 
 import os
 
 load_dotenv()
@@ -29,6 +30,11 @@ class GoogleAuthService():
             if response is None or response.get('access_token') is None:
                 return jsonify({"success": False, "message": "Authorization failed"}), 401
             session['access_token'] = (response['access_token'])
+            if User.query.filter_by(google_id= response['id']).first() is not None:
+                return jsonify({"success": False, "message": "User already exists"}), 401
+            user_created = User(google_id= response['id'])
+            db.session.add(user_created)
+            db.session.commit()
             return jsonify({"success": True, "message": "Authorized"}), 200
         except Exception as e:
             return jsonify({"success": False, "message": "Authorization failed", "details": str(e)}), 401
