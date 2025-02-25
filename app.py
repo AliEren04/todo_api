@@ -18,6 +18,7 @@ load_dotenv()
 #Configs From Environment Variables
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SESSION_PERMANENT"] = True
+app.secret_key = os.getenv("SECRET_KEY")
 
 #Extensions Initialization
 db.init_app(app)
