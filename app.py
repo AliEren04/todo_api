@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import todo
+from routes import todo, google_auth
 from extensions import db, migrate, oauth
 from dotenv import load_dotenv
 import os
@@ -25,6 +25,7 @@ migrate.init_app(app, db)
 
 #Blueprints(Controllers)
 app.register_blueprint(todo)
+app.register_blueprint(google_auth)
 
 #Error Handling
 app.errorhandler(404)
