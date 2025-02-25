@@ -27,6 +27,8 @@ DATABASE_URL = "your-database-url-here"
 GOOGLE_ID = "your-google-client-id-here"
 GOOGLE_SECRET = "your-google-client-secret-here"
 
+```
+
 ## 🚀 About Me
  * I’m a self-taught backend developer with a strong passion for programming and building efficient, scalable systems. At 20 years old, I’m constantly learning and improving my skills in backend technologies, and I currently study Software Engineering  at Canterbury Christ Church University.
 
