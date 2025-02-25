@@ -5,6 +5,28 @@ A simple Todo API built with Flask for my portfolio. This project showcases my a
 featuring basic CRUD functionality to manage tasks. This is a foundational project to demonstrate my backend development skills, which I aim to expand upon with more complex applications in the future.
 
 
+## Configure `.env` File
+
+To ensure the application works correctly, you'll need to configure the environment variables in your `.env` file. 
+
+Below is an example of the necessary variables to include in your `.env` file:
+
+```ini
+# Flask app configuration
+
+# Set the port number the app will run on (default is 5000)
+PORT = "5000"
+
+# Secret key for securely signing session cookies (replace with your own secret key)
+SECRET_KEY = "your-secret-key-here"
+
+# Database URL (replace with your actual database connection URL)
+DATABASE_URL = "your-database-url-here"
+
+# Google OAuth credentials (replace with your actual Google OAuth Client ID and Secret)
+GOOGLE_ID = "your-google-client-id-here"
+GOOGLE_SECRET = "your-google-client-secret-here"
+
 ## 🚀 About Me
  * I’m a self-taught backend developer with a strong passion for programming and building efficient, scalable systems. At 20 years old, I’m constantly learning and improving my skills in backend technologies, and I currently study Software Engineering  at Canterbury Christ Church University.
 
