@@ -1,49 +1,49 @@
-from extensions import oauth
-from dotenv import load_dotenv
-from flask import jsonify, session, url_for
-from models import User 
+from flask import session, url_for, redirect,jsonify
 import os
+from models import User
+from extensions import db,oauth
 
-load_dotenv()
-
-class GoogleAuthService():
+class GoogleAuthService:
     def __init__(self): 
-        self.oauth = oauth
-        self.google = oauth.remote_app(
+        # Initialize the Google OAuth2 client using the oauth object from extensions
+        self.google = oauth.register(
             'google',
-            consumer_key= os.getenv('GOOGLE_ID'),
-            consumer_secret= os.getenv('GOOGLE_SECRET'),
-            request_token_params={'scope': 'email profile'},
-            base_url='https://www.googleapis.com/oauth2/v1/',
-            request_token_url=None,
-            access_token_method='POST',
-            access_token_url='https://accounts.google.com/o/oauth2/token',
+            client_id=os.getenv('GOOGLE_ID'),
+            client_secret=os.getenv('GOOGLE_SECRET'),
             authorize_url='https://accounts.google.com/o/oauth2/auth',
+            authorize_params=None,
+            access_token_url='https://accounts.google.com/o/oauth2/token',
+            refresh_token_url=None,
+            client_kwargs={'scope': 'openid profile email'},
         )
-    
-    def login(self):
-        return self.google.authorize(callback=url_for('google.authorized', _external=True))
 
-    def authorised(self):
-        try:
-            response = self.google.authorized_response()
-            if response is None or response.get('access_token') is None:
-                return jsonify({"success": False, "message": "Authorization failed"}), 401
-            session['access_token'] = (response['access_token'])
-            if User.query.filter_by(google_id= response['id']).first() is not None:
-                return jsonify({"success": False, "message": "User already exists"}), 401
-            user_created = User(google_id= response['id'])
+    def login(self):
+        # Redirect to Google's OAuth2 login
+        return self.google.authorize_redirect(url_for('google_auth.authorized', _external=True))
+
+    def authorized(self):
+        # Get user info from Google
+        token = self.google.authorize_access_token()
+        user_info = self.google.get('userinfo')
+        
+        google_id = user_info.json().get('id')
+        # Check if user exists, if not, create a new user
+        if User.query.filter_by(google_id=google_id).first() is None:
+            user_created = User(google_id=google_id)
             db.session.add(user_created)
             db.session.commit()
-            return jsonify({"success": True, "message": "Authorized"}), 200
-        except Exception as e:
-            return jsonify({"success": False, "message": "Authorization failed", "details": str(e)}), 401
 
+        session['user_id'] = google_id
+        return jsonify({"success": True, "message": "Successfully logged in"}), 200
 
     def logout(self):
-        session.pop('access_token', None)
+        session.pop('user_id', None)
         return jsonify({"success": True, "message": "Logged out"}), 200
 
-    
-
-    
+    def protected_route(self, func):
+        """A decorator to protect routes that require Google login"""
+        def wrapper(*args, **kwargs):
+            if 'user_id' not in session:
+                return redirect(url_for('google_auth.login'))
+            return func(*args, **kwargs)
+        return wrapper
