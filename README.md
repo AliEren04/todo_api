@@ -13,10 +13,7 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
   - **Initial API Setup (No DB Interactions):** The API is up and running without database interaction at the moment, focused primarily on setting up basic routes.
   - **Authentication (Auth) Priority:** Implemented secure authentication before diving into database interaction, ensuring that only authorized users can access routes and data.
   - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions.
-  - **ORM Setup:** Set up Object Relational Mapping (ORM) models for easy building of tables. This is part of the future implementation to interact with the database.
-  - **Flask Migrate:** Implemented Flask Migrate to help with migrations and changes to database tables.
-  - **Tech Features (rather than functional):**
-    - Setup of essential technical infrastructure, like authentication and ORM models, ahead of route and repository interactions.
+
 
 ## Future Goals 🔮
 - **Working Routes Interacting with DB:** The next major step is to get the routes working and interacting with the database using the repository pattern for easier and cleaner code management.
