@@ -1,60 +1,48 @@
 from flask import Blueprint
 from flask import jsonify, request
-from repos import TodoRepository
 from services import GoogleAuthService
-from extensions import oauth
 
 google_auth = Blueprint("google_auth", __name__, url_prefix="/api/auth/")
 todo = Blueprint("todo", __name__, url_prefix="/api/todos/")
+
 google_auth_service = GoogleAuthService()
 
+@todo.route("/view/", methods=["GET"])
 @google_auth_service.protected_route
-@todo.route("/view", methods=["GET"])
 def get_todos():
     return jsonify({"success": True, "todos": []}), 200
 
-
-@google_auth_service.protected_route
 @todo.route("/view/<todo_id>", methods=["GET"])
-#Example just implement real db context later
+@google_auth_service.protected_route
 def get_todo(todo_id):
-    
     if(int(todo_id) == 0):
         return jsonify({"Success": False, "Message": "Todo not found"}), 404
     else: 
         return jsonify({"Success": True, "Todo": todo_id}), 200
 
-
-@google_auth_service.protected_route
 @todo.route("/create", methods=["POST"])
-#Example just implement real db context later
+@google_auth_service.protected_route
 def create_todo():
     data = request.get_json()
     return jsonify({"Success": True, "Created Todo": data}), 201
 
-
-@google_auth_service.protected_route
 @todo.route("/update/<todo_id>", methods=["PUT"])
-#Example just implement real db context later
+@google_auth_service.protected_route
 def update_todo(todo_id):
-
     data = request.get_json()
-
     if(int(todo_id) == 0):
         return jsonify({"Success": False, "Message": "Todo not found"}), 404
     else:
         return jsonify({"Success": True, "Updated Todo's ID": int(todo_id), "Updated Todo": data}), 200
 
-@google_auth_service.protected_route
 @todo.route("/delete/<todo_id>", methods=["DELETE"])
-#Example just implement real db context later
+@google_auth_service.protected_route
 def delete_todo(todo_id):
     data = request.get_json()
     if(int(todo_id) == 0):
         return jsonify({"Success": False, "Message": "Todo not found"}), 404
     else:
         return jsonify({"Success": True, "Deleted Todo's ID": int(todo_id), "Deleted Todo": data}), 200
-
 
 @google_auth.route("/login", methods=["GET"])
 def login():

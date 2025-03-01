@@ -3,7 +3,7 @@ from routes import todo, google_auth
 from extensions import db, migrate, oauth
 from dotenv import load_dotenv
 import os
-from models import Todo
+from models import Todo, User
 from datetime import timedelta
 from flask import jsonify
 
@@ -20,7 +20,7 @@ oauth.init_app(app)
 
 #Configs From Environment Variables
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SESSION_PERMANENT"] = True
+app.config["SESSION_PERMANENT"] = False
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
 app.secret_key = os.getenv("SECRET_KEY")
 
