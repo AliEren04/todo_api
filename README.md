@@ -25,7 +25,23 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 - **Enhanced Security for Edge Cases:** Adding additional layers of security, including symmetric encryption of todo text data before saving to the database and encrypting it when retrieved and sent in JSON responses. This would ensure extra data protection for sensitive information.
 
 
-## Configure `.env` File
+## Folder Structure 📁
+
+The project is structured as follows:
+
+```
+app
+    |__ .env Well Of course u will add your .env file and make configurations on configuration which stated in here after this section
+    |__ app.py
+    |__ extensions.py
+    |__ models.py
+    |__ repos.py
+    |__ requirements.txt
+    |__ routes.py
+    |__ schemas.py
+    |__ services.py
+    |__ README.md
+```    
 
 To ensure the application works correctly, you'll need to configure the environment variables in your `.env` file. 
 
