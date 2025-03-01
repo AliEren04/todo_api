@@ -5,7 +5,7 @@ A simple Todo API built with Flask for my portfolio. This project showcases my a
 featuring basic CRUD functionality to manage tasks. This is a foundational project to demonstrate my backend development skills, which I aim to expand upon with more complex applications in the future.
 
 ## A Fun Fact And What Differentiates This Project From Others 🤣
-** Simple but Secure With Authentication and Symmetric Encryption in Future🛡️
+# Simple: but Secure With Authentication and Symmetric Encryption in Future🛡️
 
 ## Current Status 🔄
 - **Work Status:** Ongoing
