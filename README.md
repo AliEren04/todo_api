@@ -8,9 +8,9 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 ## Secure With Authentication and Symmetric Encryption in Future🛡️
 
 ## Current Status 🔄
-- **Work Status:** Ongoing
+- **Work Status:** API WORKS FOUNDATIONAL EXTRAS MISSING FOR NOW
 - **Current Features:**
-  - **Initial API Setup (No DB Interactions):** The API is up and running without database interaction at the moment, focused primarily on setting up basic routes.
+  - **Initial API Setup** The API is up and running at the moment, 
   - **Authentication (Auth) Priority:** Implemented secure authentication before diving into database interaction, ensuring that only authorized users can access routes and data.
   - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions.
 
@@ -20,6 +20,8 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 - **Improved Error Handling:** Current error handling is basic and needs to be improved by formatting errors more consistently and making them more specific to each case, rather than using general error responses.
 - **Code Documentation:** Aiming to provide comprehensive code documentation, explaining the logic and structure of the application, which will make the project more maintainable and understandable for future developers.
 - **Enhanced Security for Edge Cases:** Adding additional layers of security, including symmetric encryption of todo text data before saving to the database and encrypting it when retrieved and sent in JSON responses. This would ensure extra data protection for sensitive information.
+
+**More Authentication Providers** Future integration of other authentication providers like Facebook, GitHub, etc., to give users more login options. This will use OAuth protocols and can be added
 
 
 ## Folder Structure 📁
