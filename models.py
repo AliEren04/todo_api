@@ -5,8 +5,8 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(255), nullable=False)
-    user_id =  db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False, index=True) 
+    status = db.Column(db.String(255), nullable=False, default="pending")
+    user_id =  db.Column(db.String(255), db.ForeignKey("users.google_id"), nullable=False, index=True) 
 
     def __repr__(self):
         return f"<Todo {self.id}>"

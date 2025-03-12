@@ -1,8 +1,8 @@
-"""db
+"""Initial migration
 
-Revision ID: 9156f5f41636
+Revision ID: 3f8f1a6ab9c7
 Revises: 
-Create Date: 2025-02-28 04:56:07.030062
+Create Date: 2025-03-12 01:08:55.803799
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9156f5f41636'
+revision = '3f8f1a6ab9c7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,8 @@ def upgrade():
     sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
     sa.Column('status', sa.String(length=255), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.Column('user_id', sa.String(length=255), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.google_id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('todos', schema=None) as batch_op:
