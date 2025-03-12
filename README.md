@@ -16,12 +16,10 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 
 
 ## Future Goals 🔮
-- **Working Routes Interacting with DB:** The next major step is to get the routes working and interacting with the database using the repository pattern for easier and cleaner code management.
 - **Improved Error Handling:** Current error handling is basic and needs to be improved by formatting errors more consistently and making them more specific to each case, rather than using general error responses.
 - **Code Documentation:** Aiming to provide comprehensive code documentation, explaining the logic and structure of the application, which will make the project more maintainable and understandable for future developers.
 - **Enhanced Security for Edge Cases:** Adding additional layers of security, including symmetric encryption of todo text data before saving to the database and encrypting it when retrieved and sent in JSON responses. This would ensure extra data protection for sensitive information.
-
-**More Authentication Providers** Future integration of other authentication providers like Facebook, GitHub, etc., to give users more login options. This will use OAuth protocols and can be added
+- **More Authentication Providers** Future integration of other authentication providers like Facebook, GitHub, etc., to give users more login options. This will use OAuth protocols and can be added
 
 
 ## Folder Structure 📁
