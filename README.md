@@ -5,20 +5,20 @@ A simple Todo API built with Flask for my portfolio. This project showcases my a
 featuring basic CRUD functionality to manage tasks. This is a foundational project to demonstrate my backend development skills, which I aim to expand upon with more complex applications in the future.
 
 # A Fun Fact And What Differentiates This Project From Others 🤣
-## Secure With Authentication and Symmetric Encryption in Future🛡️
+## Secure With Authentication 🛡️
 
 ## Current Status 🔄
 - **Work Status:** API WORKS FOUNDATIONAL EXTRAS MISSING FOR NOW
 - **Current Features:**
   - **Initial API Setup** The API is up and running at the moment, 
-  - **Authentication (Auth) Priority:** Implemented secure authentication before diving into database interaction, ensuring that only authorized users can access routes and data.
+  - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google.
   - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions.
 
 
 ## Future Goals 🔮
 - **Improved Error Handling:** Current error handling is basic and needs to be improved by formatting errors more consistently and making them more specific to each case, rather than using general error responses.
 - **Code Documentation:** Aiming to provide comprehensive code documentation, explaining the logic and structure of the application, which will make the project more maintainable and understandable for future developers.
-- **Enhanced Security for Edge Cases:** Adding additional layers of security, including symmetric encryption of todo text data before saving to the database and encrypting it when retrieved and sent in JSON responses. This would ensure extra data protection for sensitive information.
+
 - **More Authentication Providers** Future integration of other authentication providers like Facebook, GitHub, etc., to give users more login options. This will use OAuth protocols and can be added
 
 

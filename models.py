@@ -9,7 +9,7 @@ class Todo(db.Model):
     user_id =  db.Column(db.String(255), db.ForeignKey("users.google_id"), nullable=False, index=True) 
 
     def __repr__(self):
-        return f"<Todo {self.id}>"
+        return f"<Todo {self.id}, Title: {self.title}, Status: {self.status}>"
 
 
 class User(db.Model):
