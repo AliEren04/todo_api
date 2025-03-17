@@ -2,6 +2,7 @@ from models import Todo
 from schemas import TodoSchema
 from extensions import db
 
+
 class TodoRepository:
     def __init__(self):
         self.todo_schema = TodoSchema()
@@ -29,6 +30,16 @@ class TodoRepository:
 
     def create_todo(self, todo):
         try:
+            if not todo:
+                raise ValueError("Invalid todo data")
+            if "title" not in todo or "description" not in todo or "user_id" not in todo:
+                raise ValueError("Invalid todo data please provide title, description and user_id")
+            if "title" not in todo:
+                raise ValueError("Invalid todo data please provide title")
+            if "description" not in todo:
+                raise ValueError("Invalid todo data please provide description")
+            if "user_id" not in todo:
+                raise ValueError("Invalid todo data please provide user_id")
             todo_serialized = self.todo_schema.load(todo)
             todo_created = Todo(**todo_serialized)
             existing_todo = Todo.query.filter_by(title=todo_created.title, user_id=todo_created.user_id).first()
@@ -46,10 +57,14 @@ class TodoRepository:
             todo_serialized = self.todo_schema.load(todo, partial=True)
             todo_serialized["id"] = todo_id
             if not todo_to_update:
-                raise ValueError("Todo not found")
+                raise ValueError(f"Todo not found by specified id ({todo_id}) please provide valid todo_id")
             if "title" in todo_serialized:
+                if not todo_serialized["title"]:
+                    raise ValueError("Invalid todo data please provide title")
                 todo_to_update.title = todo_serialized["title"]
             if "description" in todo_serialized:
+                if not todo_serialized["description"]:
+                    raise ValueError("Invalid todo data please provide description")
                 todo_to_update.description = todo_serialized["description"]
             if "status" in todo_serialized:
                 if todo_serialized["status"] not in ["pending", "in progress", "completed"]:
@@ -65,6 +80,9 @@ class TodoRepository:
 
     def delete_todo(self, todo_id):
         try:
+            todo_to_delete = Todo.query.filter_by(id=todo_id).first()
+            if not todo_to_delete:
+                raise ValueError(f"Todo not found by specified id ({todo_id}) please provide valid todo_id")
             Todo.query.filter_by(id=todo_id).delete()
             db.session.commit()
             return todo_id

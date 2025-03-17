@@ -24,6 +24,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
 app.secret_key = os.getenv("SECRET_KEY")
 
+
 #Extensions Initialization
 db.init_app(app)
 migrate.init_app(app, db)
