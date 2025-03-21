@@ -10,9 +10,7 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 ## Current Status 🔄
 - **Work Status:** API WORKS FOUNDATIONAL EXTRAS MISSING FOR NOW
 - **Current Features:**
-- **Limiter:** Implemented a rate limiter to prevent abuse and ensure fair usage of the API.
-
-- **General Security:** Implemented general security measures for the API including session management and secure cookies as well as http-only and secure flags to prevent session hijacking, cross-site scripting (XSS), and cross-site request forgery (CSRF) attacks, additionally, due to use of orm (SQLAlchemy) the API is protected against SQL injection attacks, ORMS are slow but secure which is why I use them however, if needed I will use raw SQL queries to boost performance which was not needed in this project.
+- **General Security:** Implemented general security measures for the API including session management and secure cookies as well as http-only and secure flags to prevent session hijacking, cross-site scripting (XSS), and cross-site request forgery (CSRF) attacks, additionally, due to use of orm (SQLAlchemy) the API is protected against SQL injection attacks, ORMS are slow but secure which is why I use them however, if needed I will use raw SQL queries to boost performance which was not needed in this project. Last thing to add is rate limiting to prevent abuse like dos, ddos etc and ensure fair usage of the API.
   - **Initial API Setup** The API is up and running at the moment, 
   - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google.
   - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions.
