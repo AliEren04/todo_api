@@ -7,22 +7,33 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 # A Fun Fact And What Differentiates This Project From Others 🤣
 ## Secure With Authentication 🛡️
 
+
+# Important Note: 
+-Please configure your env file with the correct values for the API to work and use it securely as default values may not be secure which all are in the .env file and shown in this readme to configure it if you scroll down.
+
 ## Current Status 🔄
 - **Work Status:** API WORKS FOUNDATIONAL EXTRAS MISSING FOR NOW
 - **Current Features:**
 - **General Security:** Implemented general security measures for the API including session management and secure cookies as well as http-only and secure flags to prevent session hijacking, cross-site scripting (XSS), and cross-site request forgery (CSRF) attacks, additionally, due to use of orm (SQLAlchemy) the API is protected against SQL injection attacks, ORMS are slow but secure which is why I use them however, if needed I will use raw SQL queries to boost performance which was not needed in this project. Last thing to add is rate limiting to prevent abuse like dos, ddos etc and ensure fair usage of the API.
 
-  - **Initial API Setup** The API is up and running at the moment, 
-  - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google.
-  - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions.
+
+
+  - **Initial API Setup** The API is Functional And Ready To Use, 
+
+  - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google, Facebook Although Facebook not tested manually yet and needs to be tested  and classic auth will be added as soon as possible.
+
+  - **Maintainability:** Implemented maintainable code structure with clear separation of concerns, proper documentation soon, and consistent coding style with different layers such as repositories, services, routes, and models with oop principles.
+
+  - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions as well as a logging system.
 
 
 ## Future Goals 🔮
 - **Improved Error Handling:** Current error handling is basic and needs to be improved by formatting errors more consistently and making them more specific to each case, rather than using general error responses.
 - **Code Documentation:** Aiming to provide comprehensive code documentation, explaining the logic and structure of the application, which will make the project more maintainable and understandable for future developers.
 
-- **More Authentication Providers** Future integration of other authentication providers like Facebook, GitHub, etc., to give users more login options. This will use OAuth protocols and can be added
+- **More Authentication Providers** Facebook Auth has been added but others like classic auth like a form login will be added in the future and not promise but maybe github will be added with time.
 
+- **Logging System:** Aiming to add a logging system to the API to track and monitor the application's behavior and performance.
 
 ## Folder Structure 📁
 
@@ -39,10 +50,11 @@ app
     |__ routes.py
     |__ schemas.py
     |__ services.py
+    |__ utils.py
     |__ README.md
 ```    
 
-To ensure the application works correctly, you'll need to configure the environment variables in your `.env` file. 
+To ensure the application works correctly, you'll need to configure the environment variables in your `.env` file well of course you will not have .env file so create it basically a file with .env extension and add the variables shown below. 
 
 Below is an example of the necessary variables to include in your `.env` file:
 
