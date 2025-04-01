@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import todo, google_auth
+from routes import todo, google_auth, facebook_auth
 from extensions import db, migrate, oauth
 from dotenv import load_dotenv
 import os
@@ -11,6 +11,13 @@ from flask_limiter.util import get_remote_address
 
 
 
+#Load .env File
+load_dotenv()
+
+#App Initialization
+app = Flask(__name__)
+
+
 limiter = Limiter(
     key_func=get_remote_address,
     default_limits=["1000 per day", "200 per hour", "20 per minute", "10 per second"]
@@ -18,23 +25,26 @@ limiter = Limiter(
 
 limiter.init_app(app)
 
-#Load .env File
-load_dotenv()
-
-#App Initialization
-app = Flask(__name__)
-
 #OAuth Initialization
 oauth.init_app(app)
-
-
 
 #Configs From Environment Variables
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SESSION_PERMANENT"] = False
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
-app.config["SECURE_COOKIE"] = True
-app.config["SESSION_COOKIE_SECURE"] = True
+
+#Flask Session Cookies:
+# Configuration based on environment variable
+if os.getenv("FLASK_ENV") == "development":
+    app.config["SECURE_COOKIE"] = False
+    app.config["SESSION_COOKIE_SECURE"] = False
+    print("HTTPS disabled for development.")
+else:
+    app.config["SECURE_COOKIE"] = True
+    app.config["SESSION_COOKIE_SECURE"] = True
+    print("HTTPS enabled for production.")
+
+# These should generally stay enabled, even in development, but you can add conditions if needed.
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.secret_key = os.getenv("SECRET_KEY")
@@ -48,6 +58,7 @@ migrate.init_app(app, db)
 #Blueprints(Controllers)
 app.register_blueprint(todo)
 app.register_blueprint(google_auth)
+app.register_blueprint(facebook_auth)
 
 #Error Handling
 app.errorhandler(404)

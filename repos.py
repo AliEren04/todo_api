@@ -1,89 +1,80 @@
 from models import Todo
 from schemas import TodoSchema
 from extensions import db
-
+from sqlalchemy.exc import IntegrityError
+from uuid import UUID
 
 class TodoRepository:
     def __init__(self):
         self.todo_schema = TodoSchema()
         self.todos_schema = TodoSchema(many=True)
 
-    def get_todos(self):
+    def get_todos(self, user_id: UUID):
         try: 
-            todos = Todo.query.all()
+            todos = Todo.query.filter_by(user_id=user_id).all()
             if not todos:
                 raise ValueError("No todos found")
             return self.todos_schema.dump(todos)
         except Exception as e:
             raise Exception(f"Failed to get todos: {str(e)}")
             
-       
-        
-    def get_todo(self, todo_id):
+    def get_todo(self, todo_id: UUID, user_id: UUID):
         try:
-            todo = Todo.query.filter_by(id=todo_id).first()
+            todo = Todo.query.filter_by(id=todo_id, user_id=user_id).first()
             if not todo:
                 raise ValueError("Todo not found")
             return self.todo_schema.dump(todo)
         except Exception as e:
             raise Exception(f"Failed to get todo: {str(e)}")
 
-    def create_todo(self, todo):
+    def create_todo(self, todo: dict, user_id: UUID):
         try:
             if not todo:
                 raise ValueError("Invalid todo data")
-            if "title" not in todo or "description" not in todo or "user_id" not in todo:
-                raise ValueError("Invalid todo data please provide title, description and user_id")
-            if "title" not in todo:
-                raise ValueError("Invalid todo data please provide title")
-            if "description" not in todo:
-                raise ValueError("Invalid todo data please provide description")
-            if "user_id" not in todo:
-                raise ValueError("Invalid todo data please provide user_id")
-            todo_serialized = self.todo_schema.load(todo)
+            if user_id is None:
+                raise ValueError("User ID is required")
+
+            todo_serialized = self.todo_schema.load(todo)   
             todo_created = Todo(**todo_serialized)
-            existing_todo = Todo.query.filter_by(title=todo_created.title, user_id=todo_created.user_id).first()
-            if existing_todo:
-                raise ValueError("Todo already exists")
             db.session.add(todo_created)
             db.session.commit()
             return self.todo_schema.dump(todo_created)
+        except IntegrityError as e:
+            db.session.rollback()
+            raise ValueError(f"Database constraint violation: {str(e)}")
         except Exception as e:
+            db.session.rollback()
             raise Exception(f"Failed to create todo: {str(e)}")
 
-    def update_todo(self, todo_id, todo):
+    def update_todo(self, todo_id: UUID, todo: dict, user_id: UUID):
         try:
-            todo_to_update = Todo.query.filter_by(id=todo_id).first() 
+            todo_to_update = Todo.query.filter_by(id=todo_id, user_id=user_id).first() 
             todo_serialized = self.todo_schema.load(todo, partial=True)
             todo_serialized["id"] = todo_id
+
+            if user_id is None:
+                raise ValueError("User ID is required")
+
             if not todo_to_update:
                 raise ValueError(f"Todo not found by specified id ({todo_id}) please provide valid todo_id")
-            if "title" in todo_serialized:
-                if not todo_serialized["title"]:
-                    raise ValueError("Invalid todo data please provide title")
-                todo_to_update.title = todo_serialized["title"]
-            if "description" in todo_serialized:
-                if not todo_serialized["description"]:
-                    raise ValueError("Invalid todo data please provide description")
-                todo_to_update.description = todo_serialized["description"]
-            if "status" in todo_serialized:
-                if todo_serialized["status"] not in ["pending", "in progress", "completed"]:
-                    raise ValueError("Invalid status value")
-                todo_to_update.status = todo_serialized["status"]
-            if "user_id" in todo_serialized:
-                todo_to_update.user_id = todo_serialized["user_id"]
+            for key, value in todo_serialized.items():
+                setattr(todo_to_update, key, value)
             db.session.commit()
             updated_todo = Todo.query.get(todo_id)
             return self.todo_schema.dump(updated_todo)
+        except IntegrityError as e:
+            db.session.rollback()
+            raise ValueError(f"Database constraint violation: {str(e)}")
         except Exception as e:
+            db.session.rollback()
             raise Exception(f"Failed to update todo: {str(e)}")
 
-    def delete_todo(self, todo_id):
+    def delete_todo(self, todo_id: UUID, user_id: UUID):
         try:
-            todo_to_delete = Todo.query.filter_by(id=todo_id).first()
+            todo_to_delete = Todo.query.filter_by(id=todo_id, user_id=user_id).first()
             if not todo_to_delete:
                 raise ValueError(f"Todo not found by specified id ({todo_id}) please provide valid todo_id")
-            Todo.query.filter_by(id=todo_id).delete()
+            db.session.delete(todo_to_delete)
             db.session.commit()
             return todo_id
         except Exception as e:

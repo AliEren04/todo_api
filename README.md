@@ -62,6 +62,18 @@ DATABASE_URL = "your-database-url-here"
 GOOGLE_ID = "your-google-client-id-here"
 GOOGLE_SECRET = "your-google-client-secret-here"
 
+# Facebook OAuth credentials (replace with your actual Facebook OAuth Client ID and Secret)
+FACEBOOK_ID = "your-facebook-client-id-here"
+FACEBOOK_SECRET = "your-facebook-client-secret-here"
+
+# Development Status ("Development" or "Production")
+DEVELOPMENT = "Development"
+
+#If Development is set to "Development" then the app will run in development mode
+#Security Minimizations Therefore Please adjust accordingly otherwise you are very vulnerable:
+#Flask Session Cookies:
+#Flask Session Cookies:
+#... etc
 ```
 
 ## 🚀 About Me
