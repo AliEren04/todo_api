@@ -111,10 +111,4 @@ DEVELOPMENT = "Development"
 ## Current Projects And 
 👩‍💻 I’m currently focused on building my backend portfolio, while also developing my step_sync library for Flutter. This library helps count steps using raw sensor data and mathematical calculations. Alongside this, I’m expanding my portfolio with additional projects and handling small, local freelance jobs.
 
-🧠 I believe learning is a continuous journey. While I’ve gained proficiency in my core backend skills, I’m always pushing to expand my knowledge. In the future, I’m particularly excited to dive deeper into FastAPI and further strengthen my expertise in backend development.  
-
-👯‍♀️ I'm looking to collaborate on anything that interests me and suitable for my level to collaborate. 
-
-## 📫 How to reach me
-* Email: devalierentabak@outlook.com
-* Social Media: aliern046 (Instagram)
+🧠 I believe learning is a continuous journey. While I’ve gained proficiency in my core backend skills, I’m always pushing to expand my knowledge. In the future, I’m particularly excited to dive deeper into Django mainly and FastAPI for where cocurrency required and further strengthen my expertise in backend development.  
