@@ -4,8 +4,9 @@
 A simple Todo API built with Flask for my portfolio. This project showcases my ability to design and implement a backend API with Flask, 
 featuring basic CRUD functionality to manage tasks. This is a foundational project to demonstrate my backend development skills, which I aim to expand upon with more complex applications in the future.
 
-# A Fun Fact And What Differentiates This Project From Others 🤣
-## Secure With Authentication 🛡️
+# An Interesting Fact And What Differentiates This Project From Others
+
+## Secure With Authentication And Your Todo So Only Authenticated You Can View It 🛡️
 
 
 # Important Note: 
@@ -14,24 +15,27 @@ featuring basic CRUD functionality to manage tasks. This is a foundational proje
 ## Current Status 🔄
 - **Work Status:** API WORKS FOUNDATIONAL EXTRAS MISSING FOR NOW
 - **Current Features:**
-- **General Security:** Implemented general security measures for the API including session management and secure cookies as well as http-only and secure flags to prevent session hijacking, cross-site scripting (XSS), and cross-site request forgery (CSRF) attacks, additionally, due to use of orm (SQLAlchemy) the API is protected against SQL injection attacks, ORMS are slow but secure which is why I use them however, if needed I will use raw SQL queries to boost performance which was not needed in this project. Last thing to add is rate limiting to prevent abuse like dos, ddos etc and ensure fair usage of the API.
+- **General Security:** Implemented general security measures for the API including JWT authentication for secure token-based user sessions and multi-auth support for flexible authentication methods. Enhanced session management with HTTP-only and secure flags to prevent session hijacking, cross-site scripting (XSS), and cross-site request forgery (CSRF) attacks. The API is protected against SQL injection attacks using SQLAlchemy ORM, which ensures secure data handling.
+
+In this project, the ORM is an ideal choice as it simplifies managing user-specific data (e.g., each user can only access their own TODO lists) and differentiates between users while maintaining security and data isolation. Although ORMs may introduce some performance overhead, they offer better maintainability and security for managing relationships, especially in a multi-auth, user-specific data context. Raw SQL queries will be considered if performance becomes a bottleneck, but are not necessary at this stage. Finally, rate limiting was added to protect the API from abuse such as DDoS attacks and ensure fair usage
 
 
 
   - **Initial API Setup** The API is Functional And Ready To Use, 
 
-  - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google, Facebook Although Facebook not tested manually yet and needs to be tested  and classic auth will be added as soon as possible.
+  - **Authentication (Auth) Priority:** Implemented secure authentication with providers like Google and Facebook additionally, classic auth like a form one email password etc will be added as soon as possible.
 
-  - **Maintainability:** Implemented maintainable code structure with clear separation of concerns, proper documentation soon, and consistent coding style with different layers such as repositories, services, routes, and models with oop principles.
+  - **Maintainability:** Implemented maintainable code structure with clear separation of concerns, and consistent coding style with different layers such as repositories, services, routes, and models with oop principles.
 
-  - **Error Handling:** Basic error handling has been added, but there are plans to improve error formatting and make it more specific in future versions as well as a logging system.
+ - **Improved Error Handling:** Current error handling is improved more specific to cases however, logging and more advanced error handling missing.
 
 
 ## Future Goals 🔮
-- **Improved Error Handling:** Current error handling is basic and needs to be improved by formatting errors more consistently and making them more specific to each case, rather than using general error responses.
+- **Improved Error Handling:** Current error handling is basic and needs to be Much More Specific and Logging Needs To Be Added. 
+
 - **Code Documentation:** Aiming to provide comprehensive code documentation, explaining the logic and structure of the application, which will make the project more maintainable and understandable for future developers.
 
-- **More Authentication Providers** Facebook Auth has been added but others like classic auth like a form login will be added in the future and not promise but maybe github will be added with time.
+- **More Authentication Providers** Facebook Auth has been added but others like classic auth like a form login will be added soon in the future and not promise but maybe github will be added with time.
 
 - **Logging System:** Aiming to add a logging system to the API to track and monitor the application's behavior and performance.
 
@@ -64,8 +68,8 @@ Below is an example of the necessary variables to include in your `.env` file:
 # Set the port number the app will run on (default is 5000)
 PORT = "5000"
 
-# Secret key for securely signing session cookies (replace with your own secret key)
-SECRET_KEY = "your-secret-key-here"
+# Secret key for securely signing session cookies even though i am not using and using JWT required by some dependencies (replace with your own secret key)
+FLASK_SECRET_KEY = "your-secret-key-here"
 
 # Database URL (replace with your actual database connection URL)
 DATABASE_URL = "your-database-url-here"
@@ -74,6 +78,8 @@ DATABASE_URL = "your-database-url-here"
 GOOGLE_ID = "your-google-client-id-here"
 GOOGLE_SECRET = "your-google-client-secret-here"
 
+#JWT Secret Key To Create Json Web Tokens 
+JWT_SECRET_KEY= "your-jwt-secret-key-here"
 # Facebook OAuth credentials (replace with your actual Facebook OAuth Client ID and Secret)
 FACEBOOK_ID = "your-facebook-client-id-here"
 FACEBOOK_SECRET = "your-facebook-client-secret-here"
