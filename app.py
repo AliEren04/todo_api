@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import todo, google_auth, facebook_auth
+from routes import todo, google_auth, facebook_auth, refresh
 from extensions import db, migrate, oauth
 from dotenv import load_dotenv
 import os
@@ -8,6 +8,7 @@ from datetime import timedelta
 from flask import jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_jwt_extended import JWTManager
 
 
 
@@ -28,7 +29,7 @@ limiter.init_app(app)
 #OAuth Initialization
 oauth.init_app(app)
 
-#Configs From Environment Variables
+
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SESSION_PERMANENT"] = False
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
@@ -36,29 +37,31 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
 #Flask Session Cookies:
 # Configuration based on environment variable
 if os.getenv("FLASK_ENV") == "development":
-    app.config["SECURE_COOKIE"] = False
-    app.config["SESSION_COOKIE_SECURE"] = False
-    print("HTTPS disabled for development.")
+    #No Security For Dev environment
+    app.config["JWT_COOKIE_SECURE"] = True  
+    app.config["JWT_COOKIE_SAMESITE"] = None  
+    app.config["JWT_COOKIE_HTTPONLY"] = False  
+    print("Development Level No Security.")
 else:
-    app.config["SECURE_COOKIE"] = True
-    app.config["SESSION_COOKIE_SECURE"] = True
-    print("HTTPS enabled for production.")
-
-# These should generally stay enabled, even in development, but you can add conditions if needed.
-app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-app.secret_key = os.getenv("SECRET_KEY")
+    app.config["JWT_COOKIE_SECURE"] = True  # Ensure cookies are only sent over HTTPS
+    app.config["JWT_COOKIE_SAMESITE"] = "Lax"  # Lax or Strict for CSRF protection
+    app.config["JWT_COOKIE_HTTPONLY"] = True  # Prevent JavaScript from accessing the cookie
+    print("Production Level Security Enabled")
 
 
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
+jwt = JWTManager(app)
 #Extensions Initialization
 db.init_app(app)
 migrate.init_app(app, db)
 
 
-#Blueprints(Controllers)
+#Blueprints Routes
 app.register_blueprint(todo)
 app.register_blueprint(google_auth)
 app.register_blueprint(facebook_auth)
+app.register_blueprint(refresh)
 
 #Error Handling
 app.errorhandler(404)
